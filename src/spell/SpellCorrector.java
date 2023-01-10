@@ -1,7 +1,6 @@
 package spell;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.io.File;
 
@@ -10,29 +9,25 @@ public class SpellCorrector implements ISpellCorrector {
     public void useDictionary(String dictionaryFileName) throws IOException {
         File dictFile = new File(dictionaryFileName);
         Scanner scanner = new Scanner(dictFile);
-        HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
+        Trie dictionary = new Trie();
 
         while(scanner.hasNext()) {
-            String word = scanner.next();
-            if(dictionary.containsKey(word)) {
-                dictionary.put(word, dictionary.get(word)+1);
-            }
-            else{
-                dictionary.put(word, 1);
-            }
+            dictionary.add(scanner.next());
         }
 
-        /* for debugging
-        for(HashMap.Entry<String, Integer> entry : dictionary.entrySet()){
-            String key = entry.getKey();
-            Integer value = entry.getValue();
-            System.out.format("%s: %d", key, value);
-        }
-        */
+        System.out.println(dictionary.toString());
     }
 
     @Override
     public String suggestSimilarWord(String inputWord) {
+        // generate set of "edit distance 1" words
+        // use wrong character (25n words)
+        // omit character (n words)
+        // insert extra character (26(n+1) words)
+        // transpose two adjacent characters (n-1 words)
+
+        // generate set of "edit distance 2" words
+        // by running the same algorithm on the entire set of edit distance 1 words
         return null;
     }
 }
